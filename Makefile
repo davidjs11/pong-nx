@@ -30,7 +30,7 @@ ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 LIBS	:=	`$(PREFIX)pkg-config --libs sdl2 SDL2_mixer SDL2_image SDL2_ttf` \
-			-lnx
+			-lnx 
 
 LIBDIRS	:= $(PORTLIBS) $(LIBNX)
 
@@ -107,11 +107,16 @@ endif
 
 .PHONY: $(BUILD) clean all
 
-all: $(BUILD)
+all: $(BUILD) $(PC)
 
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+
+$(PC):
+	@gcc -o $(BUILD)/main src/main.c src/game.c src/graphics.c\
+						  src/inet.c src/sdl.c -I$(INCLUDES)\
+						  -lSDL2 -D__PC__
 
 clean:
 	@echo clean ...
