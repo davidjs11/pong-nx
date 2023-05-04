@@ -8,7 +8,7 @@ TOPDIR ?= $(CURDIR)
 include $(DEVKITPRO)/libnx/switch_rules
 
 TARGET		:=	$(notdir $(CURDIR))
-BUILD		:=	build
+BUILD		:=	bin
 SOURCES		:=	src	
 DATA		:=	data
 INCLUDES	:=	include

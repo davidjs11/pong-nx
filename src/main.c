@@ -22,12 +22,13 @@ int main(void)
     state.running = 1;
     while(state.running)
     {
+
         while(SDL_PollEvent(&event))
-        {
             if (event.type == SDL_QUIT)
                 state.running = 0;
-        }
-        
+
+        memset(state.framebuffer,0xFFFFFF00,SCREEN_WIDTH*SCREEN_HEIGHT*4);
+        render(&state);
     }
 
     return 0;

@@ -5,6 +5,6 @@
 
 // inits SDL and saves the info in the gameState structure
 int initSDL(gameState *state);
-
+void render(gameState *state);
 
 #endif

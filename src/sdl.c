@@ -26,8 +26,8 @@ int initSDL(gameState *state)
     state->texture =
         SDL_CreateTexture(
             state->renderer,
-            SDL_PIXELFORMAT_RGBA8888,
-            SDL_TEXTUREACCESS_TARGET,
+            SDL_PIXELFORMAT_ABGR8888,
+            SDL_TEXTUREACCESS_STREAMING,
             SCREEN_WIDTH,
             SCREEN_HEIGHT);
     if (!state->texture) return -1;
@@ -40,4 +40,38 @@ int initSDL(gameState *state)
     if (!state->framebuffer) return -1;
 
     return 0;
+}
+
+void render(gameState *state)
+{
+    void *pixels;
+    int pitch;
+
+    // draw framebuffer into the texture
+    SDL_LockTexture(state->texture, NULL, &pixels, &pitch);
+    printf("%d\n", pitch);
+    for (int y=0; y<SCREEN_HEIGHT; y++)
+        memcpy(
+            &((u8*) pixels)[y * pitch],
+            &state->framebuffer[y * SCREEN_WIDTH],
+            SCREEN_WIDTH * 4);
+    SDL_UnlockTexture(state->texture);
+
+    // clear the renderer
+    SDL_SetRenderTarget(state->renderer, NULL);
+    SDL_SetRenderDrawColor(state->renderer, 0x00, 0x00, 0x00, 0xFF);
+    SDL_SetRenderDrawBlendMode(state->renderer, SDL_BLENDMODE_NONE);
+    SDL_RenderClear(state->renderer);
+
+    // copy the framebuffer into the renderer
+    SDL_RenderCopyEx(
+        state->renderer,
+        state->texture,
+        NULL,
+        NULL,
+        0.0,
+        NULL,
+        SDL_FLIP_VERTICAL);
+    
+    SDL_RenderPresent(state->renderer);
 }
