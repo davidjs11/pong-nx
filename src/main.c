@@ -27,7 +27,11 @@ int main(void)
             if (event.type == SDL_QUIT)
                 state.running = 0;
 
-        memset(state.framebuffer,0xFFFFFF00,SCREEN_WIDTH*SCREEN_HEIGHT*4);
+        for(int x=0; x<SCREEN_WIDTH; x++)
+            for(int y=0; y<SCREEN_HEIGHT; y++)
+                state.framebuffer[y*SCREEN_WIDTH+x] =
+                        (x%2) ? 0xFF0000FF : 0x000000FF;
+
         render(&state);
     }
 
