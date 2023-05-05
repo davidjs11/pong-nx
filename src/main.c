@@ -35,18 +35,15 @@ int main(void)
 
         state.running = !state.input[BUTTON_START];
         posY += state.input[ARROW_UP] - state.input[ARROW_DOWN];
-        posX += state.input[ARROW_RIGHT] - state.input[ARROW_LEFT];
+        //posX += state.input[ARROW_RIGHT] - state.input[ARROW_LEFT];
 
         // clear frame
-        for(int x=0; x<SCREEN_WIDTH; x++)
-            for (int y=0; y<SCREEN_HEIGHT; y++)
-                state.framebuffer[y*SCREEN_WIDTH+x] = 0x000000FF;
+        fillBuffer(state.framebuffer, 0x000000FF, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // render the player
-        for(int x=posX; x<posX+1; x++)
-            for (int y=posY; y<posY+1; y++)
-                if (0 <= x && x < SCREEN_WIDTH && 0 <= y && y < SCREEN_HEIGHT)
-                    state.framebuffer[y*SCREEN_WIDTH + x] = 0xFF000000;
+        renderRect(state.framebuffer, 0xFFFFFFFF,
+                   25, posY, 10, 60,
+                   SCREEN_WIDTH, SCREEN_HEIGHT);
 
         renderFrame(&state);
         SDL_Delay(5);
