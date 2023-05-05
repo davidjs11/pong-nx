@@ -79,6 +79,7 @@ typedef struct
     // input stuff
     SDL_Event event;
     u8 *input;
+    SDL_Joystick *joysticks[4];
 
     // game stuff
     bool running;

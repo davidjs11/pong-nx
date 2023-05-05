@@ -42,10 +42,8 @@ int initSDL(gameState *state)
     state->input = calloc(INPUT_BUFFER_SIZE, sizeof(u8));
 
     // init joystick
-    #ifndef __PC__
     for (int i=0; i<4; i++)
-        SDL_JoystickOpen(i);
-    #endif
+        state->joysticks[i] = SDL_JoystickOpen(i);
 
     return 0;
 }
@@ -131,6 +129,28 @@ void getInput(gameState *state)
             case SWITCH_RIGHT:
                 state->input[ARROW_RIGHT] = newState;
                 break;
+        }
+        #endif
+
+
+        #ifdef __SWITCH__
+        if (state->joysticks[0])
+        {
+            SDL_Joystick *js = state->joysticks[0];
+            state->input[BUTTON_START] =
+                SDL_JoystickGetButton(js, SWITCH_PLUS);
+            state->input[BUTTON_A] =
+                SDL_JoystickGetButton(js, SWITCH_A);
+            state->input[BUTTON_B] =
+                SDL_JoystickGetButton(js, SWITCH_B);
+            state->input[ARROW_UP] =
+                SDL_JoystickGetButton(js, SWITCH_UP);
+            state->input[ARROW_DOWN] =
+                SDL_JoystickGetButton(js, SWITCH_DOWN);
+            state->input[ARROW_LEFT] =
+                SDL_JoystickGetButton(js, SWITCH_LEFT);
+            state->input[ARROW_RIGHT] =
+                SDL_JoystickGetButton(js, SWITCH_RIGHT);
         }
         #endif
 
