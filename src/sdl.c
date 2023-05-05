@@ -1,25 +1,24 @@
 #include "sdl.h"
 
+#ifdef __SWITCH__
+#include "nx.h"
+#endif
+
 int initSDL(gameState *state)
 {
     // init SDL modules
-    SDL_Init( SDL_INIT_VIDEO );
+    SDL_Init( SDL_INIT_VIDEO | SDL_INIT_JOYSTICK );
 
     // init window
     state->window =
-        SDL_CreateWindow(
-            "pongNX",
-            SDL_WINDOWPOS_CENTERED,
-            SDL_WINDOWPOS_CENTERED,
-            1280, 720, 0);
+        SDL_CreateWindow("pongNX", SDL_WINDOWPOS_UNDEFINED,
+                        SDL_WINDOWPOS_UNDEFINED, 1280, 720, 0);
     if (!state->window) return -1;
 
     // init renderer
     state->renderer =
-        SDL_CreateRenderer(
-            state->window,
-            SDL_RENDERER_ACCELERATED,
-            0);
+        SDL_CreateRenderer(state->window, 0,
+                           SDL_RENDERER_ACCELERATED);
     if (!state->renderer) return -1;
 
     // init texture
@@ -39,10 +38,18 @@ int initSDL(gameState *state)
     state->framebuffer = malloc(SCREEN_WIDTH * SCREEN_HEIGHT * 4);
     if (!state->framebuffer) return -1;
 
+    // init the input buffer
+    state->input = malloc(INPUT_BUFFER_SIZE);
+
+    // init joystick
+    for (int i=0; i<4; i++)
+        SDL_JoystickOpen(i);
+
     return 0;
 }
 
-void render(gameState *state)
+
+void renderFrame(gameState *state)
 {
     void *pixels;
     int pitch;
@@ -75,4 +82,24 @@ void render(gameState *state)
         SDL_FLIP_VERTICAL);
     
     SDL_RenderPresent(state->renderer);
+}
+
+
+void processInput(gameState *state)
+{
+    // process all the inputs
+    while(SDL_PollEvent(&(state->event)))
+    {
+        #ifdef __SWITCH__
+        if (state->event.type == SDL_JOYBUTTONDOWN)
+            if (state->event.jbutton.button == SWITCH_PLUS)
+                state->running = 0;
+        #endif
+
+        #ifdef __PC__
+        if (state->event.type == SDL_QUIT)
+            state->running = 0;
+        #endif
+    }
+    
 }

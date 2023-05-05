@@ -10,30 +10,44 @@
 
 #ifdef __SWITCH__
 #include "switch.h"
+#include "nx.h"
 #endif
 
 
 int main(void)
 {
-    gameState state; 
+    // debugging for switch
+    #ifdef __SWITCH__
+    initNxlink();
+    printf("connected to switch!\n");
+    #endif
+
+    // create the game state info
+    gameState state = {0}; 
+
+    // init SDL
     initSDL(&state);
 
-    SDL_Event event;
-    state.running = 1;
+    // fill the screen 
+    for(int x=0; x<SCREEN_WIDTH; x++)
+        for (int y=0; y<SCREEN_HEIGHT; y++)
+            state.framebuffer[y*SCREEN_WIDTH + x] = 0xFFFFFFFF;
+    
+    // game loop
     while(state.running)
     {
-
-        while(SDL_PollEvent(&event))
-            if (event.type == SDL_QUIT)
-                state.running = 0;
-
-        for(int x=0; x<SCREEN_WIDTH; x++)
-            for(int y=0; y<SCREEN_HEIGHT; y++)
-                state.framebuffer[y*SCREEN_WIDTH+x] =
-                        (x%2) ? 0xFF0000FF : 0x000000FF;
-
-        render(&state);
+        processInput(&state);
+        renderFrame(&state);
     }
+
+    // quit SDL
+    SDL_DestroyWindow(state.window);
+    SDL_DestroyRenderer(state.renderer);
+    SDL_Quit();
+    
+    #ifdef __SWITCH__
+    closeNxlink();
+    #endif
 
     return 0;
 }

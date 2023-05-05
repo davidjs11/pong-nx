@@ -9,8 +9,20 @@
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 
+// video resolution
 #define SCREEN_WIDTH  320
 #define SCREEN_HEIGHT 180
+
+
+// global input index
+#define ARROW_UP     0
+#define ARROW_DOWN   1
+#define ARROW_LEFT   2 
+#define ARROW_RIGHT  3
+#define BUTTON_A     4
+#define BUTTON_B     5
+#define BUTTON_START 6
+#define INPUT_BUFFER_SIZE 7
 
 
 // int definition
@@ -58,11 +70,17 @@ typedef struct
 // sdl and game state
 typedef struct
 {
+    // video stuff
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_Texture *texture;
-    SDL_Event event;
     u32 *framebuffer;
+
+    // input stuff
+    SDL_Event event;
+    u8 *input;
+
+    // game stuff
     bool running;
 
 } gameState;
