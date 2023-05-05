@@ -3,4 +3,7 @@
 
 #include "utils.h"
 
+// initializes a gameData structure
+void initGame(gameData *game);
+
 #endif 

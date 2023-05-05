@@ -13,13 +13,18 @@ void renderGame(gameData *data, gameState *state)
                     SCREEN_WIDTH/2, y,
                     SCREEN_WIDTH, SCREEN_HEIGHT);
 
-
     // render the player
     for (int i=0; i<2; i++)
         renderRect(state->framebuffer, 0xFFFFFFFF,
-               data->player[i].pos.x,
-               data->player[i].pos.y,
+               data->player[i].posX,
+               data->player[i].posY,
                PLAYER_WIDTH, PLAYER_HEIGHT,
+               SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    renderRect(state->framebuffer, 0xFFFFFFFF,
+               data->ball.posX,
+               data->ball.posY,
+               5, 5,
                SCREEN_WIDTH, SCREEN_HEIGHT);
 
 }

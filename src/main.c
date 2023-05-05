@@ -28,9 +28,9 @@ int main(void)
 
     gameState state = {0}; 
     gameData game = {0};
-    game.player[1].pos.x = SCREEN_WIDTH-10;
 
     initSDL(&state);
+    initGame(&game);
 
     // game loop
     while(state.running)
@@ -42,17 +42,10 @@ int main(void)
         state.running = !state.input[BUTTON_START];
 
         // update players position
-        game.player[0].pos.y +=
+        game.player[0].posY +=
             state.input[ARROW_UP] - state.input[ARROW_DOWN];
-        game.player[1].pos.y +=
+        game.player[1].posY +=
             state.input[ARROW_UP] - state.input[ARROW_DOWN];
-
-        // clear frame
-
-        // render the player
-        renderRect(state.framebuffer, 0xFFFFFFFF,
-                   25, posY, 10, 60,
-                   SCREEN_WIDTH, SCREEN_HEIGHT);
 
         renderGame(&game, &state);
 

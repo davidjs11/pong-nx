@@ -13,6 +13,9 @@
 #define SCREEN_WIDTH  320
 #define SCREEN_HEIGHT 180
 
+// player size
+#define PLAYER_WIDTH  10 
+#define PLAYER_HEIGHT 60
 
 // global input index
 #define ARROW_UP     0
@@ -24,7 +27,6 @@
 #define BUTTON_START 6
 #define INPUT_BUFFER_SIZE 7
 
-
 // int definition
 typedef uint8_t  u8;
 typedef uint16_t u16;
@@ -34,11 +36,12 @@ typedef int16_t  i16;
 typedef int32_t  i32;
 
 
-// int 2D vector
+/*
+// 16-bit int 2D vector
 typedef struct
 {
-    int x;
-    int y;
+    i16 x;
+    u16 y;
 
 } vector;
 
@@ -54,16 +57,26 @@ typedef struct
 typedef struct
 {
     vector pos;
-    float speed;
+    u8 speed;
     u8 score;
 
 } player;
+*/
+
+typedef struct
+{
+    i16 posX;
+    i16 posY;
+    i16 speedX;
+    i16 speedY;
+
+} body;
 
 // game info
 typedef struct
 {
-    player player[2];
-    ball ball;
+    body player[2];
+    body ball;
 
 } gameData;
 
