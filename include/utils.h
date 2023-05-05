@@ -34,11 +34,11 @@ typedef int16_t  i16;
 typedef int32_t  i32;
 
 
-// float vector
+// int 2D vector
 typedef struct
 {
-    float x;
-    float y;
+    int x;
+    int y;
 
 } vector;
 

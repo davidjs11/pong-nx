@@ -7,6 +7,7 @@
 #include "inet.h"
 #include "sdl.h"
 #include "utils.h"
+#include "rendering.h"
 
 #ifdef __SWITCH__
 #include "switch.h"
@@ -26,24 +27,34 @@ int main(void)
     int posX = 0, posY = 0;
 
     gameState state = {0}; 
+    gameData game = {0};
+    game.player[1].pos.x = SCREEN_WIDTH-10;
+
     initSDL(&state);
 
     // game loop
     while(state.running)
     {
+        // get the input from the user
         getInput(&state);
 
+        // exit the game if requested
         state.running = !state.input[BUTTON_START];
-        posY += state.input[ARROW_UP] - state.input[ARROW_DOWN];
-        //posX += state.input[ARROW_RIGHT] - state.input[ARROW_LEFT];
+
+        // update players position
+        game.player[0].pos.y +=
+            state.input[ARROW_UP] - state.input[ARROW_DOWN];
+        game.player[1].pos.y +=
+            state.input[ARROW_UP] - state.input[ARROW_DOWN];
 
         // clear frame
-        fillBuffer(state.framebuffer, 0x000000FF, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // render the player
         renderRect(state.framebuffer, 0xFFFFFFFF,
                    25, posY, 10, 60,
                    SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        renderGame(&game, &state);
 
         renderFrame(&state);
         SDL_Delay(5);

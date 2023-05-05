@@ -13,6 +13,12 @@ void fillBuffer(u32 *framebuffer, u32 color, int width, int height)
              framebuffer[y*width + x] = color; 
 }
 
+void renderPixel(u32 *framebuffer, u32 color, int x, int y,
+                 int screenWidth, int screenHeight)
+{
+    framebuffer[y*SCREEN_WIDTH+x] = color;
+}
+
 void renderRect(u32 *framebuffer, u32 color,
                 int posX, int posY, int w, int h,
                 int screenWidth, int screenHeight)

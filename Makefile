@@ -115,7 +115,7 @@ $(BUILD):
 
 $(PC):
 	@gcc -o $(BUILD)/main src/main.c src/game.c src/graphics.c\
-						  src/inet.c src/sdl.c -I$(INCLUDES)\
+						  src/inet.c src/sdl.c src/rendering.c -I$(INCLUDES)\
 						  -lSDL2 -D__PC__
 
 clean:
