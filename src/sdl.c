@@ -39,11 +39,13 @@ int initSDL(gameState *state)
     if (!state->framebuffer) return -1;
 
     // init the input buffer
-    state->input = malloc(INPUT_BUFFER_SIZE);
+    state->input = calloc(INPUT_BUFFER_SIZE, sizeof(u8));
 
     // init joystick
+    #ifndef __PC__
     for (int i=0; i<4; i++)
         SDL_JoystickOpen(i);
+    #endif
 
     return 0;
 }
@@ -65,6 +67,7 @@ void renderFrame(gameState *state)
 
     SDL_UnlockTexture(state->texture);
 
+
     // clear the renderer
     SDL_SetRenderTarget(state->renderer, NULL);
     SDL_SetRenderDrawColor(state->renderer, 0x00, 0x00, 0x00, 0xFF);
@@ -81,6 +84,7 @@ void renderFrame(gameState *state)
         NULL,
         SDL_FLIP_VERTICAL);
     
+
     SDL_RenderPresent(state->renderer);
 }
 
@@ -90,15 +94,49 @@ void processInput(gameState *state)
     // process all the inputs
     while(SDL_PollEvent(&(state->event)))
     {
+        u8 newState = 0;
         #ifdef __SWITCH__
-        if (state->event.type == SDL_JOYBUTTONDOWN)
-            if (state->event.jbutton.button == SWITCH_PLUS)
-                state->running = 0;
+        if (state->event.type == SDL_JOYBUTTONUP)
+            newState = 0;
+        else if (state->event.type == SDL_JOYBUTTONDOWN)
+            newState = 1;
+        switch (state->event.jbutton.button)
+        {
+            case SWITCH_PLUS:
+                state->input[BUTTON_START] = newState;
+                break;
+            case SWITCH_A:
+                state->input[BUTTON_A] = newState;
+                break;
+            case SWITCH_B:
+                state->input[BUTTON_B] = newState;
+                break;
+            case SWITCH_UP:
+                state->input[ARROW_UP] = newState;
+                break;
+            case SWITCH_DOWN:
+                state->input[ARROW_DOWN] = newState;
+                break;
+            case SWITCH_LEFT:
+                state->input[ARROW_LEFT] = newState;
+                break;
+            case SWITCH_RIGHT:
+                state->input[ARROW_RIGHT] = newState;
+                break;
+        }
         #endif
 
         #ifdef __PC__
+        const u8 *keystate = SDL_GetKeyboardState(NULL);
+        state->input[BUTTON_START] = keystate[SDL_SCANCODE_Q]; 
+        state->input[ARROW_UP] = keystate[SDL_SCANCODE_UP];
+        state->input[ARROW_DOWN] = keystate[SDL_SCANCODE_DOWN];
+        state->input[ARROW_LEFT] = keystate[SDL_SCANCODE_LEFT];
+        state->input[ARROW_RIGHT] = keystate[SDL_SCANCODE_RIGHT];
+        state->input[BUTTON_A] = keystate[SDL_SCANCODE_A];
+        state->input[BUTTON_B] = keystate[SDL_SCANCODE_S];
         if (state->event.type == SDL_QUIT)
-            state->running = 0;
+            state->input[BUTTON_START] = 1;
         #endif
     }
     
