@@ -50,6 +50,14 @@ int initSDL(gameState *state)
     return 0;
 }
 
+void quitSDL(gameState *state)
+{
+    SDL_DestroyWindow(state->window);
+    SDL_DestroyRenderer(state->renderer);
+    SDL_DestroyTexture(state->texture);
+    SDL_Quit();
+}
+
 
 void renderFrame(gameState *state)
 {
@@ -89,7 +97,7 @@ void renderFrame(gameState *state)
 }
 
 
-void processInput(gameState *state)
+void getInput(gameState *state)
 {
     // process all the inputs
     while(SDL_PollEvent(&(state->event)))

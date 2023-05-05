@@ -25,38 +25,34 @@ int main(void)
     // temporal position
     int posX = 0, posY = 0;
 
-    // create the game state info
     gameState state = {0}; 
-
-    // init SDL
     initSDL(&state);
 
     // game loop
     while(state.running)
     {
-        processInput(&state);
+        getInput(&state);
+
         state.running = !state.input[BUTTON_START];
         posY += state.input[ARROW_UP] - state.input[ARROW_DOWN];
         posX += state.input[ARROW_RIGHT] - state.input[ARROW_LEFT];
 
-        renderFrame(&state);
-        //printf("X: %d   Y: %d\n", posX, posY);
+        // clear frame
         for(int x=0; x<SCREEN_WIDTH; x++)
             for (int y=0; y<SCREEN_HEIGHT; y++)
                 state.framebuffer[y*SCREEN_WIDTH+x] = 0x000000FF;
 
-        for(int x=posX; x<SCREEN_WIDTH/2; x++)
-            for (int y=posY; y<SCREEN_HEIGHT/2; y++)
-                if (0 <= x && x <= SCREEN_WIDTH && 0 <= y && y <= SCREEN_HEIGHT)
-                    state.framebuffer[y*SCREEN_WIDTH + x] = 0xFF0000FF;
+        // render the player
+        for(int x=posX; x<posX+1; x++)
+            for (int y=posY; y<posY+1; y++)
+                if (0 <= x && x < SCREEN_WIDTH && 0 <= y && y < SCREEN_HEIGHT)
+                    state.framebuffer[y*SCREEN_WIDTH + x] = 0xFF000000;
 
-        SDL_Delay(10);
+        renderFrame(&state);
+        SDL_Delay(5);
     }
 
-    // quit SDL
-    SDL_DestroyWindow(state.window);
-    SDL_DestroyRenderer(state.renderer);
-    SDL_Quit();
+    quitSDL(&state);
     
     #ifdef __SWITCH__
     closeNxlink();
