@@ -24,10 +24,7 @@ void initGame(gameData *game)
 u8 checkCollision(body *a, body *b)
 {
     u8 collision = false;
-    collision += (a->posX >= b->posX+b->width);
-    collision += (a->posX+a->width <= b->posX);
-    collision += (a->posY <= b->posY+b->height);
-    collision += (a->posY+a->height >= b->posY);
+    // need to rewrite this
     return collision;
 }
 
