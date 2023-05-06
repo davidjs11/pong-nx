@@ -36,39 +36,11 @@ typedef int16_t  i16;
 typedef int32_t  i32;
 
 
-/*
-// 16-bit int 2D vector
 typedef struct
 {
-    i16 x;
-    u16 y;
-
-} vector;
-
-// ball
-typedef struct 
-{
-    vector pos;
-    vector speed;
-
-} ball;
-
-// player
-typedef struct
-{
-    vector pos;
-    u8 speed;
-    u8 score;
-
-} player;
-*/
-
-typedef struct
-{
-    i16 posX;
-    i16 posY;
-    i16 speedX;
-    i16 speedY;
+    int posX, posY;
+    int speedX, speedY;
+    int width, height;
 
 } body;
 

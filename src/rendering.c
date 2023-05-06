@@ -18,7 +18,7 @@ void renderGame(gameData *data, gameState *state)
         renderRect(state->framebuffer, 0xFFFFFFFF,
                data->player[i].posX,
                data->player[i].posY,
-               PLAYER_WIDTH, PLAYER_HEIGHT,
+               data->player[i].width, data->player[i].height,
                SCREEN_WIDTH, SCREEN_HEIGHT);
 
     renderRect(state->framebuffer, 0xFFFFFFFF,

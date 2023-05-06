@@ -20,11 +20,7 @@ int main(void)
     // debugging for switch
     #ifdef __SWITCH__
     initNxlink();
-    printf("connected to switch!\n");
     #endif
-
-    // temporal position
-    int posX = 0, posY = 0;
 
     gameState state = {0}; 
     gameData game = {0};
@@ -42,10 +38,13 @@ int main(void)
         state.running = !state.input[BUTTON_START];
 
         // update players position
-        game.player[0].posY +=
-            state.input[ARROW_UP] - state.input[ARROW_DOWN];
-        game.player[1].posY +=
-            state.input[ARROW_UP] - state.input[ARROW_DOWN];
+        moveObject(&game.player[0],
+                    state.input[ARROW_RIGHT]-state.input[ARROW_LEFT],
+                    state.input[ARROW_UP]-state.input[ARROW_DOWN]);
+        moveObject(&game.player[1],
+                    state.input[ARROW_RIGHT]-state.input[ARROW_LEFT],
+                    state.input[ARROW_UP]-state.input[ARROW_DOWN]);
+        printf("collision %d\n", checkCollision(&(game.player[0]), &(game.player[1])));
 
         renderGame(&game, &state);
 

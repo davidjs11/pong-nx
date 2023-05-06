@@ -2,21 +2,37 @@
 
 void initGame(gameData *game)
 {
-    // player position
+    // player
     game->player[0].posX = (SCREEN_WIDTH/PLAYER_WIDTH);
     game->player[1].posX = (SCREEN_WIDTH/PLAYER_WIDTH)*(PLAYER_WIDTH-1);
-    game->player[0].posY = SCREEN_HEIGHT/2+PLAYER_HEIGHT/2;
-    game->player[1].posY = SCREEN_HEIGHT/2+PLAYER_HEIGHT/2;
+    for(int i=0; i<2; i++)
+    {
+        game->player[i].posY = SCREEN_HEIGHT/2+PLAYER_HEIGHT/2;
+        game->player[i].width = PLAYER_WIDTH;
+        game->player[i].height = PLAYER_HEIGHT;
+        game->player[i].speedX = 0;
+        game->player[i].speedY = 2;
+    }
 
-    // player speed
-    game->player[0].speedX = 2;
-    game->player[1].speedY = 2;
-
-    // initialize ball position
+    // ball
     game->ball.posX = SCREEN_WIDTH/2;
     game->ball.posY = SCREEN_HEIGHT/2;
-
-    // ball speed
     game->ball.speedX = 1;
     game->ball.speedY = 1;
+}
+
+u8 checkCollision(body *a, body *b)
+{
+    u8 collision = false;
+    collision += (a->posX >= b->posX+b->width);
+    collision += (a->posX+a->width <= b->posX);
+    collision += (a->posY <= b->posY+b->height);
+    collision += (a->posY+a->height >= b->posY);
+    return collision;
+}
+
+void moveObject(body *obj, i8 dirX, i8 dirY)
+{
+    obj->posX += obj->speedX * dirX;
+    obj->posY += obj->speedY * dirY;
 }
