@@ -10,6 +10,9 @@ void initGame(gameData *game);
 u8 checkCollision(body *a, body *b);
 
 // move an object given a direction 
-void moveObject(body *obj, i8 dirX, i8 dirY);
+void moveObject(body *obj, float dirX, float dirY);
+
+// calculate next game state
+void stepGame(gameData *game, gameState *state);
 
 #endif 
