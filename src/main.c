@@ -39,10 +39,11 @@ int main(void)
 
         // update players position
         stepGame(&game, &state);
-        printf("%d\n", game.player[0].score);
 
-
+        // render the game into the framebuffer
         renderGame(&game, &state);
+
+        // put framebuffer into the screen
         renderFrame(&state);
     }
 

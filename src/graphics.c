@@ -34,11 +34,10 @@ void renderDigit(u32 *framebuffer, u32 color,
                   int screenWidth, int screenHeight)
 {
     u16 startPoint = digit*FONT_WIDTH*FONT_HEIGHT%(10*FONT_WIDTH*FONT_HEIGHT);
-    printf("startpoint: %d\n", startPoint);
 
     for(int x=0; x<FONT_WIDTH; x++)
-        for(int y=0; y<FONT_HEIGHT; y++)
-            if (font[startPoint + y*FONT_WIDTH + x])
+        for(int y=FONT_HEIGHT-1; y>=0; y--)
+            if (font[startPoint + y * FONT_WIDTH + x])
                 renderRect(framebuffer, color, posX+x*w, posY-y*h, w, h,
                            SCREEN_WIDTH, SCREEN_HEIGHT);
 }

@@ -27,7 +27,21 @@ void renderGame(gameData *data, gameState *state)
                data->ball.width, data->ball.height,
                SCREEN_WIDTH, SCREEN_HEIGHT);
 
+    // player 1 score
+    renderDigit(state->framebuffer, 0xFFFFFFFF, data->player[0].score/10,
+                digitFont, 5*SCREEN_WIDTH/15, SCREEN_HEIGHT-2*FONT_HEIGHT,
+                3, 4, SCREEN_WIDTH, SCREEN_HEIGHT);
     renderDigit(state->framebuffer, 0xFFFFFFFF, data->player[0].score,
-                digitFont, 50, 50, 2, 2, SCREEN_WIDTH, SCREEN_HEIGHT);
+                digitFont, 6*SCREEN_WIDTH/15, SCREEN_HEIGHT-2*FONT_HEIGHT,
+                3, 4, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+    // player 2 score
+    renderDigit(state->framebuffer, 0xFFFFFFFF, data->player[1].score/10,
+                digitFont, 8*SCREEN_WIDTH/15+3*FONT_WIDTH,
+                SCREEN_HEIGHT-2*FONT_HEIGHT,
+                3, 4, SCREEN_WIDTH, SCREEN_HEIGHT);
+    renderDigit(state->framebuffer, 0xFFFFFFFF, data->player[1].score,
+                digitFont, 9*SCREEN_WIDTH/15+3*FONT_WIDTH,
+                SCREEN_HEIGHT-2*FONT_HEIGHT,
+                3, 4, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
