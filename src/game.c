@@ -17,26 +17,23 @@ void initGame(gameData *game)
     // ball
     game->ball.posX = SCREEN_WIDTH/2;
     game->ball.posY = SCREEN_HEIGHT/2;
-    game->ball.speedX = -2;
-    game->ball.speedY = 2;
-}
+    game->ball.width = BALL_SIZE;
+    game->ball.height = BALL_SIZE;
+    game->ball.speedX = -1;
+    game->ball.speedY = 1;
+    game->ball.score = 0; // ball score is for touch counting
 
-u8 checkCollision(body *a, body *b)
-{
-    u8 tmp = 0;
-    return tmp;
+    // other
+    game->gameSpeed = 1;
 }
-
-void moveObject(body *obj, float dirX, float dirY)
-{
-}
-
 
 void stepGame(gameData *game, gameState *state)
 {
     body *player = game->player;
     body *ball = &(game->ball);
     u8 collisionX = 0, collisionY = 0;
+    u8 rightBorder = 0, leftBorder = 0;
+    u8 scanCollision = 0;
 
     // update player position
     for(int i=0; i<2; i++)
@@ -49,25 +46,59 @@ void stepGame(gameData *game, gameState *state)
             player[i].speedY * state->input[ARROW_DOWN];
     }
 
-
     // oh no; it's ball movement time
-    for (int i=0; i<2; i++)
+    // check collision with players
+    scanCollision += ball->posX <= player[0].posX+player[0].width;
+    scanCollision += ball->posX+ball->width >= player[1].posX;
+    for (int i=0; i<2 && !collisionX && scanCollision; i++)
+    {
         collisionX +=
-            (ball->posX <= player[i].posX+player[i].width
-        &&  ball->posX >= player[i].posX
+            (ball->posX == player[0].posX+player[0].width
+        ||  ball->posX+ball->width == player[1].posX)
         &&  ball->posY >= player[i].posY-player[i].height
-        &&  ball->posY <= player[i].posY);
+        &&  ball->posY-ball->height <= player[i].posY;
 
+        collisionY +=
+            ball->posX+ball->width >= player[i].posX
+        &&  ball->posX <= player[i].posX+player[i].width
+        && (ball->posY == player[i].posY-player[i].height
+        ||  ball->posY-ball->height == player[i].posY);
+    }
+
+    // check collision with top and bottom screen borders 
     collisionY += (ball->posY >= SCREEN_HEIGHT);
     collisionY += (ball->posY <= 0);
-
-    printf("Y%d\n", collisionY);
     
+    // collision with screen borders
+    leftBorder = (ball->posX <= 0);
+    rightBorder = (ball->posX >= SCREEN_WIDTH);
+
+    // update score if a player loses
+    if (leftBorder || rightBorder)
+    {
+        player[0].score += rightBorder;
+        player[1].score += leftBorder;
+        ball->posX = SCREEN_WIDTH/2;
+        ball->posY = SCREEN_HEIGHT/2;
+        ball->speedX = leftBorder - rightBorder;
+        ball->speedY = -ball->speedY;
+        game->gameSpeed = 1;
+    }
+
+    // update touch counter and game speed
+    ball->score += collisionX;
+    if (collisionX && ball->score%6 == 5)
+        game->gameSpeed += (game->gameSpeed < 7);
+
+    // change ball direction if a collision is detected
     if (collisionX)
         ball->speedX = -ball->speedX;
     if (collisionY)
         ball->speedY = -ball->speedY;
 
+    // update ball position
     ball->posX += ball->speedX;
     ball->posY += ball->speedY;
+
+    SDL_Delay(10-game->gameSpeed);
 }

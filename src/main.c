@@ -39,11 +39,11 @@ int main(void)
 
         // update players position
         stepGame(&game, &state);
+        printf("%d\n", game.ball.score);
 
 
         renderGame(&game, &state);
         renderFrame(&state);
-        SDL_Delay(10);
     }
 
     quitSDL(&state);

@@ -14,8 +14,9 @@
 #define SCREEN_HEIGHT 180
 
 // player size
-#define PLAYER_WIDTH  10 
+#define PLAYER_WIDTH  10
 #define PLAYER_HEIGHT 60
+#define BALL_SIZE 5
 
 // global input index
 #define ARROW_UP     0
@@ -38,9 +39,10 @@ typedef int32_t  i32;
 
 typedef struct
 {
-    int posX, posY;
-    int speedX, speedY;
-    int width, height;
+    i16 posX, posY;
+    i16 speedX, speedY;
+    i16 width, height;
+    u8 score;
 
 } body;
 
@@ -49,6 +51,7 @@ typedef struct
 {
     body player[2];
     body ball;
+    u8 gameSpeed;
 
 } gameData;
 

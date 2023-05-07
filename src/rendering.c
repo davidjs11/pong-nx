@@ -24,7 +24,7 @@ void renderGame(gameData *data, gameState *state)
     renderRect(state->framebuffer, 0xFFFFFFFF,
                data->ball.posX,
                data->ball.posY,
-               5, 5,
+               data->ball.width, data->ball.height,
                SCREEN_WIDTH, SCREEN_HEIGHT);
 
 }
