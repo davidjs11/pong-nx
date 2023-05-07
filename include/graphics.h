@@ -15,4 +15,10 @@ void renderRect(u32 *framebuffer, u32 color,
                 int posX, int posY, int w, int h,
                 int screenWidth, int screenHeight);
 
+// render a single digit using a bitmap font
+void renderDigit(u32 *framebuffer, u32 color,
+                  u8 digit, u8 *font,
+                  int posX, int posY, int w, int h,
+                  int screenWidth, int screenHeight);
+
 #endif

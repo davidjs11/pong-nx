@@ -3,6 +3,7 @@
 
 #include "game.h"
 #include "graphics.h"
+#include "utils.h"
 
 void renderGame(gameData *data, gameState *state);
 

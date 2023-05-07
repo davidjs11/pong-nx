@@ -39,7 +39,7 @@ int main(void)
 
         // update players position
         stepGame(&game, &state);
-        printf("%d\n", game.ball.score);
+        printf("%d\n", game.player[0].score);
 
 
         renderGame(&game, &state);

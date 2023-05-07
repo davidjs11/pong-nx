@@ -13,6 +13,10 @@
 #define SCREEN_WIDTH  320
 #define SCREEN_HEIGHT 180
 
+// font size
+#define FONT_WIDTH  4
+#define FONT_HEIGHT 8
+
 // player size
 #define PLAYER_WIDTH  10
 #define PLAYER_HEIGHT 60

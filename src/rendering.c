@@ -1,5 +1,5 @@
 #include "rendering.h"
-#include "utils.h"
+#include "font.h"
 
 void renderGame(gameData *data, gameState *state)
 {
@@ -26,5 +26,8 @@ void renderGame(gameData *data, gameState *state)
                data->ball.posY,
                data->ball.width, data->ball.height,
                SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    renderDigit(state->framebuffer, 0xFFFFFFFF, data->player[0].score,
+                digitFont, 50, 50, 2, 2, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 }
