@@ -35,7 +35,7 @@ int main(void)
         getInput(&state);
 
         // exit the game if requested
-        state.running = !state.input[BUTTON_START];
+        state.running = !state.input[0][BUTTON_START];
 
         // update players position
         stepGame(&game, &state);

@@ -40,10 +40,10 @@ void stepGame(gameData *game, gameState *state)
     {
         player[i].posY +=
             (player[i].posY < SCREEN_HEIGHT) *
-            player[i].speedY * state->input[ARROW_UP];
+            player[i].speedY * state->input[i][ARROW_UP];
         player[i].posY -=
             (player[i].posY-player[i].height > 0) *
-            player[i].speedY * state->input[ARROW_DOWN];
+            player[i].speedY * state->input[i][ARROW_DOWN];
     }
 
     // oh no; it's ball movement time
