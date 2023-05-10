@@ -1,5 +1,5 @@
 #include "game.h"
-
+    // pansio mira y juega Dwarf Fortress!!!!!
 void initGame(gameData *game)
 {
     // player
@@ -100,5 +100,5 @@ void stepGame(gameData *game, gameState *state)
     ball->posX += ball->speedX;
     ball->posY += ball->speedY;
 
-    //SDL_Delay(7-game->gameSpeed);
+    SDL_Delay(10-game->gameSpeed);
 }

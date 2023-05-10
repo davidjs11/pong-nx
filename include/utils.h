@@ -30,7 +30,8 @@
 #define BUTTON_A     4
 #define BUTTON_B     5
 #define BUTTON_START 6
-#define INPUT_BUFFER_SIZE 7
+#define BUTTON_PAUSE 7
+#define INPUT_BUFFER_SIZE 8
 
 // int definition
 typedef uint8_t  u8;
@@ -75,7 +76,7 @@ typedef struct
 
     // game stuff
     bool running;
-
+    bool pause; 
 } gameState;
 
 

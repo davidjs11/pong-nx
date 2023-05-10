@@ -36,15 +36,19 @@ int main(void)
 
         // exit the game if requested
         state.running = !state.input[0][BUTTON_START];
+        state.pause = state.input[0][BUTTON_PAUSE];
 
-        // update players position
-        stepGame(&game, &state);
+        if (!state.pause) {
+    
+            // update players position
+            stepGame(&game, &state);
 
-        // render the game into the framebuffer
-        renderGame(&game, &state);
+            // render the game into the framebuffer
+            renderGame(&game, &state);
 
-        // put framebuffer into the screen
-        renderFrame(&state);
+            // put framebuffer into the screen
+            renderFrame(&state);
+        }
     }
 
     quitSDL(&state);

@@ -33,6 +33,7 @@ int initSDL(gameState *state)
 
     // start running the game
     state->running = 1;
+    state->pause = 0;
 
     // init the framebuffer 
     state->framebuffer = malloc(SCREEN_WIDTH * SCREEN_HEIGHT * 4);
@@ -160,21 +161,22 @@ void getInput(gameState *state)
 
         #ifdef __PC__
         const u8 *keystate = SDL_GetKeyboardState(NULL);
-        state->input[0][BUTTON_START] = keystate[SDL_SCANCODE_Q]; 
-        state->input[0][ARROW_UP] = keystate[SDL_SCANCODE_UP];
-        state->input[0][ARROW_DOWN] = keystate[SDL_SCANCODE_DOWN];
-        state->input[0][ARROW_LEFT] = keystate[SDL_SCANCODE_LEFT];
-        state->input[0][ARROW_RIGHT] = keystate[SDL_SCANCODE_RIGHT];
-        state->input[0][BUTTON_A] = keystate[SDL_SCANCODE_A];
-        state->input[0][BUTTON_B] = keystate[SDL_SCANCODE_S];
-        
         state->input[1][BUTTON_START] = keystate[SDL_SCANCODE_Q]; 
-        state->input[1][ARROW_UP] = keystate[SDL_SCANCODE_W];
-        state->input[1][ARROW_DOWN] = keystate[SDL_SCANCODE_S];
-        state->input[1][ARROW_LEFT] = keystate[SDL_SCANCODE_A];
-        state->input[1][ARROW_RIGHT] = keystate[SDL_SCANCODE_D];
+        state->input[1][ARROW_UP] = keystate[SDL_SCANCODE_UP];
+        state->input[1][ARROW_DOWN] = keystate[SDL_SCANCODE_DOWN];
+        state->input[1][ARROW_LEFT] = keystate[SDL_SCANCODE_LEFT];
+        state->input[1][ARROW_RIGHT] = keystate[SDL_SCANCODE_RIGHT];
         state->input[1][BUTTON_A] = keystate[SDL_SCANCODE_A];
         state->input[1][BUTTON_B] = keystate[SDL_SCANCODE_S];
+        state->input[0][BUTTON_PAUSE] = keystate[SDL_SCANCODE_E];
+
+        state->input[0][BUTTON_START] = keystate[SDL_SCANCODE_Q]; 
+        state->input[0][ARROW_UP] = keystate[SDL_SCANCODE_W];
+        state->input[0][ARROW_DOWN] = keystate[SDL_SCANCODE_S];
+        state->input[0][ARROW_LEFT] = keystate[SDL_SCANCODE_A];
+        state->input[0][ARROW_RIGHT] = keystate[SDL_SCANCODE_D];
+        state->input[0][BUTTON_A] = keystate[SDL_SCANCODE_A];
+        state->input[0][BUTTON_B] = keystate[SDL_SCANCODE_S];
 
         if (state->event.type == SDL_QUIT)
             state->input[0][BUTTON_START] = 1;
