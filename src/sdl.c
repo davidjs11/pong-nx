@@ -137,23 +137,24 @@ void getInput(gameState *state)
 
 
         #ifdef __SWITCH__
-        if (state->joysticks[0])
-        {
-            SDL_Joystick *js = state->joysticks[0];
-            state->input[0][BUTTON_START] =
-                SDL_JoystickGetButton(js, SWITCH_PLUS);
-            state->input[0][BUTTON_A] =
-                SDL_JoystickGetButton(js, SWITCH_A);
-            state->input[0][BUTTON_B] =
-                SDL_JoystickGetButton(js, SWITCH_B);
-            state->input[0][ARROW_UP] =
-                SDL_JoystickGetButton(js, SWITCH_UP);
-            state->input[0][ARROW_DOWN] =
-                SDL_JoystickGetButton(js, SWITCH_DOWN);
-            state->input[0][ARROW_LEFT] =
-                SDL_JoystickGetButton(js, SWITCH_LEFT);
-            state->input[0][ARROW_RIGHT] =
-                SDL_JoystickGetButton(js, SWITCH_RIGHT);
+        for (int i=0; i<2; i++)
+            if (state->joysticks[0])
+            {
+                SDL_Joystick *js = state->joysticks[i];
+                state->input[i][BUTTON_START] =
+                    SDL_JoystickGetButton(js, SWITCH_PLUS);
+                state->input[i][BUTTON_A] =
+                    SDL_JoystickGetButton(js, SWITCH_A);
+                state->input[i][BUTTON_B] =
+                    SDL_JoystickGetButton(js, SWITCH_B);
+                state->input[i][ARROW_UP] =
+                    SDL_JoystickGetButton(js, SWITCH_UP);
+                state->input[i][ARROW_DOWN] =
+                    SDL_JoystickGetButton(js, SWITCH_DOWN);
+                state->input[i][ARROW_LEFT] =
+                    SDL_JoystickGetButton(js, SWITCH_LEFT);
+                state->input[i][ARROW_RIGHT] =
+                    SDL_JoystickGetButton(js, SWITCH_RIGHT);
         }
         #endif
 

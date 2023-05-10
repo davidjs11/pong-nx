@@ -14,8 +14,8 @@ DATA		:=	data
 INCLUDES	:=	include
 ROMFS		:=	romfs
 
-APP_TITLE   := pongNX-online 
-APP_AUTHOR  := davidjs11
+APP_TITLE   := pongNX 
+APP_AUTHOR  := davidjs11 
 
 ARCH	:=	-march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 

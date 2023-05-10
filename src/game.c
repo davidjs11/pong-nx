@@ -87,7 +87,7 @@ void stepGame(gameData *game, gameState *state)
 
     // update touch counter and game speed
     ball->score += collisionX;
-    if (collisionX && ball->score%6 == 5)
+    if (collisionX && ball->score%3 == 2)
         game->gameSpeed += (game->gameSpeed < 7);
 
     // change ball direction if a collision is detected
@@ -100,5 +100,5 @@ void stepGame(gameData *game, gameState *state)
     ball->posX += ball->speedX;
     ball->posY += ball->speedY;
 
-    SDL_Delay(10-game->gameSpeed);
+    //SDL_Delay(7-game->gameSpeed);
 }
