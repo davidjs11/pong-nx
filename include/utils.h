@@ -75,8 +75,8 @@ typedef struct
     SDL_Joystick *joysticks[4];
 
     // game stuff
-    bool running;
-    bool pause; 
+    u8 running;
+    u8 pause, readPause;
 } gameState;
 
 

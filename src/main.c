@@ -36,10 +36,20 @@ int main(void)
 
         // exit the game if requested
         state.running = !state.input[0][BUTTON_START];
-        state.pause = state.input[0][BUTTON_PAUSE];
 
-        if (!state.pause) {
-    
+        // check for pause 
+        if (state.input[0][BUTTON_PAUSE])
+            if (state.readPause)
+            {
+                state.pause = !state.pause; 
+                state.readPause = 0;
+            }
+        else
+            state.readPause = 1;
+
+        // processing and rendering
+        if (!state.pause)
+        {
             // update players position
             stepGame(&game, &state);
 

@@ -34,6 +34,7 @@ int initSDL(gameState *state)
     // start running the game
     state->running = 1;
     state->pause = 0;
+    state->readPause = 1;
 
     // init the framebuffer 
     state->framebuffer = malloc(SCREEN_WIDTH * SCREEN_HEIGHT * 4);
