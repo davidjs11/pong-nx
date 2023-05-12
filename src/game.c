@@ -33,7 +33,6 @@ void stepGame(gameData *game, gameState *state)
     body *ball = &(game->ball);
     u8 collisionX = 0, collisionY = 0;
     u8 rightBorder = 0, leftBorder = 0;
-    u8 scanCollision = 0;
 
     // update player position
     for(int i=0; i<2; i++)
@@ -47,22 +46,36 @@ void stepGame(gameData *game, gameState *state)
     }
 
     // oh no; it's ball movement time
+
     // check collision with players
-    scanCollision += ball->posX <= player[0].posX+player[0].width;
-    scanCollision += ball->posX+ball->width >= player[1].posX;
-    for (int i=0; i<2 && !collisionX && scanCollision; i++)
+    // player 1
+    if (ball->posX <= player[0].posX+player[0].width)
     {
         collisionX +=
-            (ball->posX == player[0].posX+player[0].width
-        ||  ball->posX+ball->width == player[1].posX)
-        &&  ball->posY >= player[i].posY-player[i].height
-        &&  ball->posY-ball->height <= player[i].posY;
+            (ball->posX == player[0].posX+player[0].width)
+        &&  ball->posY >= player[0].posY-player[0].height
+        &&  ball->posY-ball->height <= player[0].posY;
 
         collisionY +=
-            ball->posX+ball->width >= player[i].posX
-        &&  ball->posX <= player[i].posX+player[i].width
-        && (ball->posY == player[i].posY-player[i].height
-        ||  ball->posY-ball->height == player[i].posY);
+            ball->posX+ball->width >= player[0].posX
+        &&  ball->posX <= player[0].posX+player[0].width
+        && (ball->posY == player[0].posY-player[0].height
+        ||  ball->posY-ball->height == player[0].posY);
+    }
+
+    // player 2
+    if (ball->posX+ball->width >= player[1].posX)
+    {
+        collisionX +=
+            (ball->posX+ball->width == player[1].posX)
+        &&  ball->posY >= player[1].posY-player[1].height
+        &&  ball->posY-ball->height <= player[1].posY;
+
+        collisionY +=
+            ball->posX+ball->width >= player[1].posX
+        &&  ball->posX <= player[1].posX+player[1].width
+        && (ball->posY == player[1].posY-player[1].height
+        ||  ball->posY-ball->height == player[1].posY);
     }
 
     // check collision with top and bottom screen borders 

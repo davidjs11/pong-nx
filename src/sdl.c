@@ -169,7 +169,6 @@ void getInput(gameState *state)
         state->input[1][ARROW_RIGHT] = keystate[SDL_SCANCODE_RIGHT];
         state->input[1][BUTTON_A] = keystate[SDL_SCANCODE_A];
         state->input[1][BUTTON_B] = keystate[SDL_SCANCODE_S];
-        state->input[0][BUTTON_PAUSE] = keystate[SDL_SCANCODE_E];
 
         state->input[0][BUTTON_START] = keystate[SDL_SCANCODE_Q]; 
         state->input[0][ARROW_UP] = keystate[SDL_SCANCODE_W];
@@ -178,6 +177,8 @@ void getInput(gameState *state)
         state->input[0][ARROW_RIGHT] = keystate[SDL_SCANCODE_D];
         state->input[0][BUTTON_A] = keystate[SDL_SCANCODE_A];
         state->input[0][BUTTON_B] = keystate[SDL_SCANCODE_S];
+
+        state->input[0][BUTTON_PAUSE] = keystate[SDL_SCANCODE_E];
 
         if (state->event.type == SDL_QUIT)
             state->input[0][BUTTON_START] = 1;

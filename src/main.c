@@ -18,9 +18,9 @@
 int main(void)
 {
     // debugging for switch
-    #ifdef __SWITCH__
+#ifdef __SWITCH__
     initNxlink();
-    #endif
+#endif
 
     gameState state = {0}; 
     gameData game = {0};
@@ -38,14 +38,27 @@ int main(void)
         state.running = !state.input[0][BUTTON_START];
 
         // check for pause 
+        /*
         if (state.input[0][BUTTON_PAUSE])
+        {
             if (state.readPause)
             {
                 state.pause = !state.pause; 
                 state.readPause = 0;
             }
-        else
+        }
+        else 
             state.readPause = 1;
+        */
+
+        if (!state.input[0][BUTTON_PAUSE])
+            state.readPause = 1;
+        else
+            if (state.readPause)
+            {
+                state.pause = !state.pause;
+                state.readPause = 0;
+            }
 
         // processing and rendering
         if (!state.pause)
@@ -62,10 +75,10 @@ int main(void)
     }
 
     quitSDL(&state);
-    
-    #ifdef __SWITCH__
+
+#ifdef __SWITCH__
     closeNxlink();
-    #endif
+#endif
 
     return 0;
 }
