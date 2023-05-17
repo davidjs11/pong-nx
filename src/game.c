@@ -24,7 +24,7 @@ void initGame(gameData *game)
     game->ball.score = 0; // ball score is for touch counting
 
     // other
-    game->gameSpeed = 1;
+    game->gameSpeed = 2;
 }
 
 void stepGame(gameData *game, gameState *state)
@@ -95,13 +95,13 @@ void stepGame(gameData *game, gameState *state)
         ball->posY = SCREEN_HEIGHT/2;
         ball->speedX = leftBorder - rightBorder;
         ball->speedY = -ball->speedY;
-        game->gameSpeed = 1;
+        game->gameSpeed = 2;
     }
 
     // update touch counter and game speed
     ball->score += collisionX;
-    if (collisionX && ball->score%3 == 2)
-        game->gameSpeed += (game->gameSpeed < 7);
+    if (collisionX && ball->score%4 == 3)
+        game->gameSpeed++;
 
     // change ball direction if a collision is detected
     if (collisionX)

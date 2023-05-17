@@ -61,7 +61,8 @@ int main(void)
         if (!state.pause)
         {
             // process the next game state
-            stepGame(&game, &state);
+            for(int i=0; i<game.gameSpeed; i++)
+                stepGame(&game, &state);
 
             // render the game into the framebuffer
             renderGame(&game, &state);
