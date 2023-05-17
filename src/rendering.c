@@ -45,3 +45,10 @@ void renderGame(gameData *data, gameState *state)
                 SCREEN_HEIGHT-2*FONT_HEIGHT,
                 3, 4, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
+
+void renderPause(gameData *data, gameState *state)
+{
+    renderRect(state->framebuffer, 0x000000FF,
+               SCREEN_WIDTH/2-50, SCREEN_HEIGHT/2+25,
+               100, 50, SCREEN_WIDTH, SCREEN_HEIGHT);
+}

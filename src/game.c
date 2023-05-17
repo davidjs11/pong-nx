@@ -112,6 +112,4 @@ void stepGame(gameData *game, gameState *state)
     // update ball position
     ball->posX += ball->speedX;
     ball->posY += ball->speedY;
-
-    SDL_Delay(10-game->gameSpeed);
 }

@@ -6,6 +6,7 @@
 #include "utils.h"
 
 void renderGame(gameData *data, gameState *state);
+void renderPause(gameData *data, gameState *state);
 
 
 #endif
