@@ -28,7 +28,7 @@ int main(void)
     gameData game = {0};
 
     // time related values
-    u32 t_start, t_end;
+    u32 t_start, t_end, fps = 60; 
 
     // init everything
     initSDL(&state);
@@ -74,8 +74,8 @@ int main(void)
         // get global timer at finish 
         t_end = SDL_GetPerformanceCounter();
 
-        // cap game to 60 fps
-        SDL_Delay(16.666f - 1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
+        // cap game to selected fps
+        SDL_Delay(1000/fps - 1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
     }
 
     quitSDL(&state);
