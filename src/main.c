@@ -46,16 +46,8 @@ int main(void)
         // exit the game if requested
         state.running = !state.input[0][BUTTON_START];
 
-        // check for pause 
-        if (!state.input[0][BUTTON_PAUSE])
-            state.readPause = 1;
-        else if (state.readPause)
-        {
-            state.pause = !state.pause;
-            renderPause(&game, &state);
-            renderFrame(&state);
-            state.readPause = 0;
-        }
+        // check for pause
+        checkPause(&game, &state);
 
         // processing and rendering
         if (!state.pause)
@@ -70,12 +62,18 @@ int main(void)
             // put framebuffer into the screen
             renderFrame(&state);
         }
+        else
+        {
+            renderPause(&state);
+            renderFrame(&state);
+        }
 
         // get global timer at finish 
         t_end = SDL_GetPerformanceCounter();
 
         // cap game to selected fps
-        SDL_Delay(1000/fps - 1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
+        SDL_Delay(1000/fps
+            -1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
     }
 
     quitSDL(&state);

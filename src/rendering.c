@@ -46,7 +46,7 @@ void renderGame(gameData *data, gameState *state)
                 3, 4, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
-void renderPause(gameData *data, gameState *state)
+void renderPause(gameState *state)
 {
     renderRect(state->framebuffer, 0x000000FF,
                SCREEN_WIDTH/2-50, SCREEN_HEIGHT/2+25,

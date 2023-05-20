@@ -113,3 +113,16 @@ void stepGame(gameData *game, gameState *state)
     ball->posX += ball->speedX;
     ball->posY += ball->speedY;
 }
+
+void checkPause(gameData *game, gameState *state)
+{
+    if (!state->input[0][BUTTON_PAUSE])
+        state->readPause = 1;
+    else if (state->readPause)
+    {
+        state->pause = !state->pause;
+        //renderPause(game, state);
+        //renderFrame(state);
+        state->readPause = 0;
+    }
+}

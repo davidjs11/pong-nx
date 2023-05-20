@@ -15,4 +15,7 @@ void moveObject(body *obj, float dirX, float dirY);
 // calculate next game state
 void stepGame(gameData *game, gameState *state);
 
+// check for pause
+void checkPause(gameData *game, gameState *state);
+
 #endif 
