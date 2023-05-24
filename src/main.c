@@ -58,15 +58,12 @@ int main(void)
 
             // render the game into the framebuffer
             renderGame(&game, &state);
-
-            // put framebuffer into the screen
-            renderFrame(&state);
         }
         else
-        {
             renderPause(&state);
-            renderFrame(&state);
-        }
+
+        // put framebuffer into the screen
+        renderFrame(&state);
 
         // get global timer at finish 
         t_end = SDL_GetPerformanceCounter();
