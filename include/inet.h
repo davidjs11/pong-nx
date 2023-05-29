@@ -19,7 +19,7 @@ typedef struct
 int initServer(socketInfo *server);
 
 // resolves a host for communication
-socketInfo resolveHost(char *ip, int port);
+socketInfo resolveHost(const char *ip, int port);
 
 
 // message exchange stuff
