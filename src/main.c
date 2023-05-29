@@ -34,6 +34,13 @@ int main(void)
     initSDL(&state);
     initGame(&game);
 
+    // online stuff
+    char *ip = "172.17.36.80";
+    socketInfo server, client;
+    server = resolveHost(ip, 3476);
+    client = server;
+
+
     // game loop
     while(state.running)
     {
@@ -71,6 +78,10 @@ int main(void)
         // cap game to selected fps
         SDL_Delay(1000/fps
             -1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
+
+
+        // send data to server
+        sendMessage(&server, &client, (char *) state.input[0], INPUT_BUFFER_SIZE);
     }
 
     quitSDL(&state);

@@ -32,7 +32,7 @@ void setSocketTimeout(int socket)
 }
 
 
-int initServer(struct socketInfo *server)
+int initServer(socketInfo *server)
 {
     // bind server address to the socket
     int tmp = bind(server->socket, (struct sockaddr *) &(server->address),
@@ -48,9 +48,8 @@ int initServer(struct socketInfo *server)
     return 0;
 }
 
-int getMessage(
-    struct socketInfo *receiver, struct socketInfo *sender,
-    char *buffer, int bufferSize)
+int getMessage(socketInfo *receiver, socketInfo *sender,
+               char *buffer, int bufferSize)
 {
     int tmp;
     memset(buffer, 0, bufferSize);
@@ -63,9 +62,8 @@ int getMessage(
     return tmp;
 }
 
-int sendMessage(
-    struct socketInfo *receiver, struct socketInfo *sender,
-    char *buffer, int bufferSize)
+int sendMessage(socketInfo *receiver, socketInfo *sender,
+                char *buffer, int bufferSize)
 {
    int tmp;
 

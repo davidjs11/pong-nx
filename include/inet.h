@@ -1,6 +1,8 @@
 #ifndef INET_H
 #define INET_H
 
+#include <stdio.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <netinet/in.h>
