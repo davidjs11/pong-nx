@@ -26,7 +26,7 @@ void setSocketTimeout(int socket)
 {
     struct timeval readTimeout;
     readTimeout.tv_sec = 0;
-    readTimeout.tv_usec = 10;
+    readTimeout.tv_usec = 5;
     setsockopt(socket, SOL_SOCKET, SO_RCVTIMEO,
 	       &readTimeout, sizeof(readTimeout));
 }
@@ -58,7 +58,7 @@ int getMessage(socketInfo *receiver, socketInfo *sender,
     tmp = recvfrom(receiver->socket, buffer, bufferSize, 0,
 	      (struct sockaddr *) &(sender->address),
 	      &(sender->size));
-    printf("tmptmptmp: %d\n", tmp);
+
     return tmp;
 }
 

@@ -30,4 +30,6 @@ int getMessage(socketInfo *receceiver, socketInfo *sender,
 int sendMessage(socketInfo *receiver, socketInfo *sender,
                 char *buffer, int size);
 
+void setSocketTimeout(int socket);
+
 #endif

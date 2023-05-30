@@ -35,9 +35,10 @@ int main(void)
     initGame(&game);
 
     // online stuff
-    char *ip = "172.17.36.80";
+    char *ip = "192.168.1.144";
     socketInfo server, client;
     server = resolveHost(ip, 3476);
+    setSocketTimeout(server.socket);
     client = server;
 
 
@@ -76,12 +77,14 @@ int main(void)
         t_end = SDL_GetPerformanceCounter();
 
         // cap game to selected fps
-        SDL_Delay(1000/fps
-            -1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
+        SDL_Delay(
+            16.666-1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
 
+        printf("%f\n", 1.0f/((t_end-t_start) / (float) SDL_GetPerformanceFrequency()));
 
         // send data to server
-        sendMessage(&server, &client, (char *) state.input[0], INPUT_BUFFER_SIZE);
+        //sendMessage(&server, &client, (char *) state.input[0], INPUT_BUFFER_SIZE);
+        //getMessage(&client, &server, (char *) state.input[1], INPUT_BUFFER_SIZE);
     }
 
     quitSDL(&state);
