@@ -103,30 +103,34 @@ void getInput(gameState *state)
     // process all the inputs
     while(SDL_PollEvent(&(state->event)))
     {
+        if (state->event.type == SDL_QUIT)
+            state->running = 0;
+
         #ifdef __SWITCH__
-        for (int i=0; i<2; i++)
+        //for (int i=0; i<2; i++)
             if (state->joysticks[0])
             {
-                SDL_Joystick *js = state->joysticks[i];
-                state->input[i][BUTTON_START] =
+                SDL_Joystick *js = state->joysticks[0];
+                state->input[1][BUTTON_START] =
                     SDL_JoystickGetButton(js, SWITCH_PLUS);
-                state->input[i][BUTTON_A] =
+                state->input[1][BUTTON_A] =
                     SDL_JoystickGetButton(js, SWITCH_A);
-                state->input[i][BUTTON_B] =
+                state->input[1][BUTTON_B] =
                     SDL_JoystickGetButton(js, SWITCH_B);
-                state->input[i][ARROW_UP] =
+                state->input[1][ARROW_UP] =
                     SDL_JoystickGetButton(js, SWITCH_UP);
-                state->input[i][ARROW_DOWN] =
+                state->input[1][ARROW_DOWN] =
                     SDL_JoystickGetButton(js, SWITCH_DOWN);
-                state->input[i][ARROW_LEFT] =
+                state->input[1][ARROW_LEFT] =
                     SDL_JoystickGetButton(js, SWITCH_LEFT);
-                state->input[i][ARROW_RIGHT] =
+                state->input[1][ARROW_RIGHT] =
                     SDL_JoystickGetButton(js, SWITCH_RIGHT);
-        }
+            }
         #endif
 
         #ifdef __PC__
         const u8 *keystate = SDL_GetKeyboardState(NULL);
+        /*
         state->input[1][BUTTON_START] = keystate[SDL_SCANCODE_Q]; 
         state->input[1][ARROW_UP] = keystate[SDL_SCANCODE_UP];
         state->input[1][ARROW_DOWN] = keystate[SDL_SCANCODE_DOWN];
@@ -134,6 +138,7 @@ void getInput(gameState *state)
         state->input[1][ARROW_RIGHT] = keystate[SDL_SCANCODE_RIGHT];
         state->input[1][BUTTON_A] = keystate[SDL_SCANCODE_A];
         state->input[1][BUTTON_B] = keystate[SDL_SCANCODE_S];
+        */
 
         state->input[0][BUTTON_START] = keystate[SDL_SCANCODE_Q]; 
         state->input[0][ARROW_UP] = keystate[SDL_SCANCODE_W];
@@ -149,5 +154,9 @@ void getInput(gameState *state)
             state->input[0][BUTTON_START] = 1;
 
         #endif
+        printf("inp: ");
+        for(int i=0; i<9; i++)
+            printf("%d", state->input[1][i]);
+        printf("\n");
     }
 }

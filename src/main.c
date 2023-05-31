@@ -28,7 +28,7 @@ int main(void)
     gameData game = {0};
 
     // time related values
-    u32 t_start, t_end, fps = 60; 
+    u32 t_start = 0, t_end = 0;
 
     // init everything
     initSDL(&state);
@@ -37,22 +37,44 @@ int main(void)
     // online stuff
     char *ip = "192.168.1.144";
     socketInfo server, client;
-    server = resolveHost(ip, 3476);
+    server = resolveHost(ip, 3475);
     setSocketTimeout(server.socket);
     client = server;
 
+    // init everything
+    initSDL(&state);
+    initGame(&game);
 
     // game loop
     while(state.running)
     {
-        // get global timer at start
-        t_start = SDL_GetPerformanceCounter();
+        t_start = SDL_GetPerformanceCounter(); // get global timer
+
+        // exit the game if requested
+        state.running = !(state.input[0][BUTTON_START]
+                       || state.input[1][BUTTON_START]);
 
         // get the input from the user
         getInput(&state);
 
-        // exit the game if requested
-        state.running = !state.input[0][BUTTON_START];
+        // send data to server
+        sendMessage(&server, &client,
+                    (char *) state.input[0],
+                    2*INPUT_BUFFER_SIZE);
+        sendMessage(&server, &client,
+                    (char *) state.input[1],
+                    INPUT_BUFFER_SIZE);
+
+        /*
+        // get data from the server
+        getMessage(&client, &server,
+                   (char *) *state.input, 2*INPUT_BUFFER_SIZE);
+        */
+
+        printf("net: ");
+        for(int i=0; i<18; i++)
+            printf("%u", state.input[0][i]);
+        printf("\n");
 
         // check for pause
         checkPause(&game, &state);
@@ -73,18 +95,13 @@ int main(void)
         // put framebuffer into the screen
         renderFrame(&state);
 
-        // get global timer at finish 
-        t_end = SDL_GetPerformanceCounter();
 
-        // cap game to selected fps
+        t_end = SDL_GetPerformanceCounter(); // get global timer
+        
+
         SDL_Delay(
-            16.666-1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
-
-        printf("%f\n", 1.0f/((t_end-t_start) / (float) SDL_GetPerformanceFrequency()));
-
-        // send data to server
-        //sendMessage(&server, &client, (char *) state.input[0], INPUT_BUFFER_SIZE);
-        //getMessage(&client, &server, (char *) state.input[1], INPUT_BUFFER_SIZE);
+            16.666f -
+            1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
     }
 
     quitSDL(&state);

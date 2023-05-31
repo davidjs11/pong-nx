@@ -23,15 +23,16 @@
 #define BALL_SIZE 5
 
 // global input index
-#define ARROW_UP     0
-#define ARROW_DOWN   1
-#define ARROW_LEFT   2 
-#define ARROW_RIGHT  3
-#define BUTTON_A     4
-#define BUTTON_B     5
-#define BUTTON_START 6
-#define BUTTON_PAUSE 7
-#define INPUT_BUFFER_SIZE 8
+#define PLAYER_ID    0
+#define ARROW_UP     1
+#define ARROW_DOWN   2
+#define ARROW_LEFT   3 
+#define ARROW_RIGHT  4
+#define BUTTON_A     5
+#define BUTTON_B     6
+#define BUTTON_START 7
+#define BUTTON_PAUSE 8
+#define INPUT_BUFFER_SIZE 9
 
 // int definition
 typedef uint8_t  u8;
