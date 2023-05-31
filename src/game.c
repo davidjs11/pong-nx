@@ -39,10 +39,10 @@ void stepGame(gameData *game, gameState *state)
     {
         player[i].posY +=
             (player[i].posY < SCREEN_HEIGHT) *
-            player[i].speedY * state->input[i][ARROW_UP];
+            player[i].speedY * state->input[i*INPUTSIZE+ARROW_UP];
         player[i].posY -=
             (player[i].posY-player[i].height > 0) *
-            player[i].speedY * state->input[i][ARROW_DOWN];
+            player[i].speedY * state->input[i*INPUTSIZE+ARROW_DOWN];
     }
 
     // oh no; it's ball movement time
@@ -116,7 +116,7 @@ void stepGame(gameData *game, gameState *state)
 
 void checkPause(gameData *game, gameState *state)
 {
-    if (!state->input[0][BUTTON_PAUSE])
+    if (!state->input[BUTTON_PAUSE])
         state->readPause = 1;
     else if (state->readPause)
     {

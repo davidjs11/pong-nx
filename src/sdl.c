@@ -41,8 +41,7 @@ int initSDL(gameState *state)
     if (!state->framebuffer) return -1;
 
     // init the input buffer
-    state->input[0] = calloc(INPUT_BUFFER_SIZE, sizeof(u8));
-    state->input[1] = calloc(INPUT_BUFFER_SIZE, sizeof(u8));
+    state->input = calloc(2*INPUTSIZE, sizeof(u8));
 
     // init joystick
     for (int i=0; i<4; i++)
@@ -111,19 +110,19 @@ void getInput(gameState *state)
             if (state->joysticks[0])
             {
                 SDL_Joystick *js = state->joysticks[0];
-                state->input[1][BUTTON_START] =
+                state->input[INPUTSIZE+BUTTON_START] =
                     SDL_JoystickGetButton(js, SWITCH_PLUS);
-                state->input[1][BUTTON_A] =
+                state->input[INPUTSIZE+BUTTON_A] =
                     SDL_JoystickGetButton(js, SWITCH_A);
-                state->input[1][BUTTON_B] =
+                state->input[INPUTSIZE+BUTTON_B] =
                     SDL_JoystickGetButton(js, SWITCH_B);
-                state->input[1][ARROW_UP] =
+                state->input[INPUTSIZE+ARROW_UP] =
                     SDL_JoystickGetButton(js, SWITCH_UP);
-                state->input[1][ARROW_DOWN] =
+                state->input[INPUTSIZE+ARROW_DOWN] =
                     SDL_JoystickGetButton(js, SWITCH_DOWN);
-                state->input[1][ARROW_LEFT] =
+                state->input[INPUTSIZE+ARROW_LEFT] =
                     SDL_JoystickGetButton(js, SWITCH_LEFT);
-                state->input[1][ARROW_RIGHT] =
+                state->input[INPUTSIZE+ARROW_RIGHT] =
                     SDL_JoystickGetButton(js, SWITCH_RIGHT);
             }
         #endif
@@ -140,23 +139,19 @@ void getInput(gameState *state)
         state->input[1][BUTTON_B] = keystate[SDL_SCANCODE_S];
         */
 
-        state->input[0][BUTTON_START] = keystate[SDL_SCANCODE_Q]; 
-        state->input[0][ARROW_UP] = keystate[SDL_SCANCODE_W];
-        state->input[0][ARROW_DOWN] = keystate[SDL_SCANCODE_S];
-        state->input[0][ARROW_LEFT] = keystate[SDL_SCANCODE_A];
-        state->input[0][ARROW_RIGHT] = keystate[SDL_SCANCODE_D];
-        state->input[0][BUTTON_A] = keystate[SDL_SCANCODE_A];
-        state->input[0][BUTTON_B] = keystate[SDL_SCANCODE_S];
+        state->input[BUTTON_START] = keystate[SDL_SCANCODE_Q]; 
+        state->input[ARROW_UP] = keystate[SDL_SCANCODE_W];
+        state->input[ARROW_DOWN] = keystate[SDL_SCANCODE_S];
+        state->input[ARROW_LEFT] = keystate[SDL_SCANCODE_A];
+        state->input[ARROW_RIGHT] = keystate[SDL_SCANCODE_D];
+        state->input[BUTTON_A] = keystate[SDL_SCANCODE_A];
+        state->input[BUTTON_B] = keystate[SDL_SCANCODE_S];
 
-        state->input[0][BUTTON_PAUSE] = keystate[SDL_SCANCODE_E];
+        state->input[BUTTON_PAUSE] = keystate[SDL_SCANCODE_E];
 
         if (state->event.type == SDL_QUIT)
-            state->input[0][BUTTON_START] = 1;
+            state->input[BUTTON_START] = 1;
 
         #endif
-        printf("inp: ");
-        for(int i=0; i<9; i++)
-            printf("%d", state->input[1][i]);
-        printf("\n");
     }
 }

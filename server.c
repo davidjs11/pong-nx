@@ -9,8 +9,8 @@ int main(void)
 
     initServer(&server);
 
-    u8 input[2*INPUT_BUFFER_SIZE] = {0};
-    u8 tmpInput[2*INPUT_BUFFER_SIZE] = {0};
+    u8 input[2*INPUTSIZE] = {0};
+    u8 tmpInput[2*INPUTSIZE] = {0};
     //setSocketTimeout(server.socket);
     //setSocketTimeout(client.socket);
 
@@ -18,22 +18,22 @@ int main(void)
     int tmp;
     while(1)
     {
-        for(int i=0; i<2*INPUT_BUFFER_SIZE; i++)
+        for(int i=0; i<2*INPUTSIZE; i++)
             tmpInput[i] = 0;
 
         tmp = getMessage(
             &server, &client,
-            (char *) tmpInput, 2*INPUT_BUFFER_SIZE);
+            (char *) tmpInput, 2*INPUTSIZE);
 
         printf("%d inp: ", tmp);
-        for(int i=0; i<2*INPUT_BUFFER_SIZE; i++)
+        for(int i=0; i<2*INPUTSIZE; i++)
         {
             input[i] = (input[i] | tmpInput[i]);
             printf("%u", input[i]);
         }
         printf("\n");
         printf("%d tmp: ", tmp);
-        for(int i=0; i<2*INPUT_BUFFER_SIZE; i++)
+        for(int i=0; i<2*INPUTSIZE; i++)
         {
             printf("%u", tmpInput[i]);
         }
@@ -41,10 +41,10 @@ int main(void)
 
         /*
         sendMessage(&client,&server,
-                    (char *) input, 2*INPUT_BUFFER_SIZE);
+                    (char *) input, 2*INPUTSIZE);
         */
 
-        for(int i=0; i<2*INPUT_BUFFER_SIZE; i++)
+        for(int i=0; i<2*INPUTSIZE; i++)
             input[i] = 0;
     }
 

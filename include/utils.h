@@ -32,7 +32,7 @@
 #define BUTTON_B     6
 #define BUTTON_START 7
 #define BUTTON_PAUSE 8
-#define INPUT_BUFFER_SIZE 9
+#define INPUTSIZE 9
 
 // int definition
 typedef uint8_t  u8;
@@ -74,7 +74,7 @@ typedef struct
 
     // input stuff
     SDL_Event event;
-    u8 *input[2];
+    u8 *input;
     SDL_Joystick *joysticks[4];
 
     // game stuff

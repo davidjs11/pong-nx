@@ -51,29 +51,29 @@ int main(void)
         t_start = SDL_GetPerformanceCounter(); // get global timer
 
         // exit the game if requested
-        state.running = !(state.input[0][BUTTON_START]
-                       || state.input[1][BUTTON_START]);
+        state.running = !(state.input[BUTTON_START]
+                       || state.input[INPUTSIZE+BUTTON_START]);
 
         // get the input from the user
         getInput(&state);
 
         // send data to server
         sendMessage(&server, &client,
-                    (char *) state.input[0],
-                    2*INPUT_BUFFER_SIZE);
+                    (char *) state.input,
+                    2*INPUTSIZE);
         sendMessage(&server, &client,
-                    (char *) state.input[1],
-                    INPUT_BUFFER_SIZE);
+                    (char *) state.input,
+                    INPUTSIZE);
 
         /*
         // get data from the server
         getMessage(&client, &server,
-                   (char *) *state.input, 2*INPUT_BUFFER_SIZE);
+                   (char *) *state.input, 2*INPUTSIZE);
         */
 
         printf("net: ");
         for(int i=0; i<18; i++)
-            printf("%u", state.input[0][i]);
+            printf("%u", state.input[i]);
         printf("\n");
 
         // check for pause
