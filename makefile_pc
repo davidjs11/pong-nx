@@ -1,0 +1,27 @@
+HOME	= .
+SRC		= $(HOME)/src
+BIN		= $(HOME)/bin
+INCLUDE	= $(HOME)/include
+
+all:\
+	$(BIN)\
+	$(SRC)/main.c\
+	$(SRC)/game.c\
+	$(SRC)/graphics.c\
+	$(SRC)/rendering.c\
+	$(SRC)/sdl.c\
+	$(SRC)/easyTCP.c
+	@gcc -o $(BIN)/main\
+			src/main.c src/game.c src/graphics.c\
+		  	src/sdl.c src/rendering.c src/easyTCP.c\
+			-I$(INCLUDE) -lSDL2 -D__PC__
+
+	@gcc -o $(BIN)/server server.c\
+			src/game.c src/easyTCP.c -I$(INCLUDE) -D__PC__
+
+$(BIN):
+	@mkdir $(BIN)
+
+clean:
+	@rm -r $(BIN)/*
+	@rmdir $(BIN)

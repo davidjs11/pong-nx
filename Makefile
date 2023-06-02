@@ -115,9 +115,9 @@ $(BUILD):
 
 $(PC):
 	@gcc -o $(BUILD)/main src/main.c src/game.c src/graphics.c\
-						  src/inet.c src/sdl.c src/rendering.c -I$(INCLUDES)\
+						  src/easyTCP.c src/sdl.c src/rendering.c -I$(INCLUDES)\
 						  -lSDL2 -D__PC__
-	@gcc -o $(BUILD)/server server.c src/game.c src/inet.c -I$(INCLUDES) -D__PC__
+	@gcc -o $(BUILD)/server server.c src/game.c src/easyTCP.c -I$(INCLUDES) -D__PC__
 
 clean:
 	@echo clean ...

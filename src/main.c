@@ -5,10 +5,10 @@
 
 #include "game.h"
 #include "graphics.h"
-#include "inet.h"
 #include "sdl.h"
 #include "utils.h"
 #include "rendering.h"
+#include "easyTCP.h"
 
 #ifdef __SWITCH__
 #include "switch.h"
@@ -36,12 +36,10 @@ int main(void)
 
     // online stuff
     char *ip = "192.168.1.144";
-    socketInfo server, client;
-    server = resolveHost(ip, 3475);
-    setSocketTimeout(server.socket);
-    client = server;
+    struct socketInfo server;
+    connectToServer(&server, ip, 3476);
 
-    int frame = 0;
+    u8 tmpInput[INPUTSIZE*2];
 
     // game loop
     while(state.running)
@@ -55,23 +53,26 @@ int main(void)
         // get the input from the user
         getInput(&state);
 
-        printf("inp: ");
+        printf("\ninp: ");
         for(int i=0; i<18; i++)
             printf("%u", state.input[i]);
         printf("\n");
 
         // send data to server
-        sendMessage(&server, &client,
-                    (char *) state.input,
+        sendMessage(&server, (char *) state.input,
                     2*INPUTSIZE);
 
         // get data from the server
-        getMessage(&client, &server,
-                   (char *) state.input, 2*INPUTSIZE);
+        recvMessage(&server, (char *) tmpInput,
+                   2*INPUTSIZE);
+
+        // mix both player inputs in global input buffer
+        for(int i=0; i<2*INPUTSIZE; i++)
+            state.input[i] = (state.input[i] | tmpInput[i]);
 
         printf("net: ");
         for(int i=0; i<18; i++)
-            printf("%u", state.input[i]);
+            printf("%u", tmpInput[i]);
         printf("\n");
 
         // check for pause
@@ -100,10 +101,9 @@ int main(void)
         SDL_Delay(
             16.666f -
             1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
-
-        frame++;
     }
 
+    disconnectFromServer(&server);
     quitSDL(&state);
 
 #ifdef __SWITCH__
