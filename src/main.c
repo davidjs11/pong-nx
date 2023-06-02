@@ -54,8 +54,7 @@ int main(void)
         getInput(&state);
 
         printf("\ninp: ");
-        for(int i=0; i<18; i++)
-            printf("%u", state.input[i]);
+        for(int i=0; i<18; i++) printf("%u", state.input[i]);
         printf("\n");
 
         // send data to server
@@ -63,17 +62,23 @@ int main(void)
                     2*INPUTSIZE);
 
         // get data from the server
-        recvMessage(&server, (char *) tmpInput,
-                   2*INPUTSIZE);
+        #ifdef __SWITCH__
+        recvMessage(&server, (char *) state.input,
+                    INPUTSIZE);
+        #endif
 
-        // mix both player inputs in global input buffer
-        for(int i=0; i<2*INPUTSIZE; i++)
-            state.input[i] = (state.input[i] | tmpInput[i]);
+        #ifdef __PC__
+        recvMessage(&server, (char *) state.input+INPUTSIZE,
+                    INPUTSIZE);
+        #endif
 
         printf("net: ");
         for(int i=0; i<18; i++)
-            printf("%u", tmpInput[i]);
+        {
+            printf("%u", state.input[i]);
+        }
         printf("\n");
+
 
         // check for pause
         //checkPause(&game, &state);

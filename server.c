@@ -29,7 +29,7 @@ int main(void)
     while(1)
     {
         // clear input buffers
-        memset(input, 0, 2*INPUTSIZE);
+        memset(tmpInput, 0, 2*INPUTSIZE);
 
         // detect which fd is readable
         readableClients = acceptedClients;
@@ -46,11 +46,14 @@ int main(void)
 
         if (FD_ISSET(client[0].socket, &readableClients))
         {
-            tmp = recvMessage(client, tmpInput, 2*INPUTSIZE);
+            tmp = recvMessage(client, input, INPUTSIZE);
 
             // mix both player inputs in global input buffer
+            /*
+            memset(input, 0, INPUTSIZE);
             for(int i=0; i<2*INPUTSIZE; i++)
                 input[i] = (input[i] | tmpInput[i]);
+                */
 
             // handle disconnection
             if (tmp <= 0)
@@ -66,16 +69,19 @@ int main(void)
 
         if (connected > 1 && FD_ISSET(client[1].socket, &readableClients))
         {
-            tmp = recvMessage(client+1, tmpInput, 2*INPUTSIZE);
+            tmp = recvMessage(client+1, input+INPUTSIZE, INPUTSIZE);
 
             // mix both player inputs in global input buffer
+            /*
+            memset(input+INPUTSIZE, 0, INPUTSIZE);
             for(int i=0; i<2*INPUTSIZE; i++)
                 input[i] = (input[i] | tmpInput[i]);
+            */
 
             // handle disconnection
             if (tmp <= 0)
             {
-                FD_CLR(client[0].socket, &acceptedClients);
+                FD_CLR(client[1].socket, &acceptedClients);
                 connected--;
                 printf("player 2 disconnected\n");
             }
