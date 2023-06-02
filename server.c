@@ -18,34 +18,21 @@ int main(void)
     int tmp;
     while(1)
     {
-        for(int i=0; i<2*INPUTSIZE; i++)
-            tmpInput[i] = 0;
-
-        tmp = getMessage(
-            &server, &client,
-            (char *) tmpInput, 2*INPUTSIZE);
-
-        printf("%d inp: ", tmp);
-        for(int i=0; i<2*INPUTSIZE; i++)
-        {
-            input[i] = (input[i] | tmpInput[i]);
-            printf("%u", input[i]);
-        }
-        printf("\n");
-        printf("%d tmp: ", tmp);
-        for(int i=0; i<2*INPUTSIZE; i++)
-        {
-            printf("%u", tmpInput[i]);
-        }
-        printf("\n");
+        memset(tmpInput, 0, 2*INPUTSIZE);
 
         /*
-        sendMessage(&client,&server,
-                    (char *) input, 2*INPUTSIZE);
+        getMessage(&server, &client,
+                   (char *) tmpInput, 2*INPUTSIZE);
         */
 
+        // mix both player inputs in global input buffer
         for(int i=0; i<2*INPUTSIZE; i++)
-            input[i] = 0;
+            input[i] = (input[i] | tmpInput[i]);
+
+        sendMessage(&client,&server,
+                    (char *) input, 2*INPUTSIZE);
+
+        memset(tmpInput, 0, 2*INPUTSIZE);
     }
 
     return 0;

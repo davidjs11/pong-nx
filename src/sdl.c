@@ -41,7 +41,9 @@ int initSDL(gameState *state)
     if (!state->framebuffer) return -1;
 
     // init the input buffer
-    state->input = calloc(2*INPUTSIZE, sizeof(u8));
+    state->input = malloc(2*INPUTSIZE);
+    for(int i=0; i<2*INPUTSIZE; i++)
+        state->input[i] = 0;
 
     // init joystick
     for (int i=0; i<4; i++)

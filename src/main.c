@@ -41,9 +41,7 @@ int main(void)
     setSocketTimeout(server.socket);
     client = server;
 
-    // init everything
-    initSDL(&state);
-    initGame(&game);
+    int frame = 0;
 
     // game loop
     while(state.running)
@@ -57,19 +55,19 @@ int main(void)
         // get the input from the user
         getInput(&state);
 
+        printf("inp: ");
+        for(int i=0; i<18; i++)
+            printf("%u", state.input[i]);
+        printf("\n");
+
         // send data to server
         sendMessage(&server, &client,
                     (char *) state.input,
                     2*INPUTSIZE);
-        sendMessage(&server, &client,
-                    (char *) state.input,
-                    INPUTSIZE);
 
-        /*
         // get data from the server
         getMessage(&client, &server,
-                   (char *) *state.input, 2*INPUTSIZE);
-        */
+                   (char *) state.input, 2*INPUTSIZE);
 
         printf("net: ");
         for(int i=0; i<18; i++)
@@ -77,7 +75,7 @@ int main(void)
         printf("\n");
 
         // check for pause
-        checkPause(&game, &state);
+        //checkPause(&game, &state);
 
         // processing and rendering
         if (!state.pause)
@@ -102,6 +100,8 @@ int main(void)
         SDL_Delay(
             16.666f -
             1000*(t_end-t_start)/(float)SDL_GetPerformanceFrequency());
+
+        frame++;
     }
 
     quitSDL(&state);
